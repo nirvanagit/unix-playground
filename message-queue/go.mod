@@ -1,4 +1,4 @@
-module system-v
+module message-queue
 
 go 1.13
 
