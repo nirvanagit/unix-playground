@@ -32,3 +32,6 @@ Killing all processes under 1157 (parent process)
  1794  8482  1793 grep --color=auto 1157
 [foo@bar processes]$
 ```
+
+### References
+- [webhostinghero.com](https://www.webhostinghero.com/how-to-create-a-process-group-in-linux/)

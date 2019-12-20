@@ -20,3 +20,6 @@ Check ppid
 ```
 
 PPID of this process is set to 1, and not the pid of the login shell
+
+### References
+- [webhostinghero.com](https://www.webhostinghero.com/how-to-create-a-process-group-in-linux/)
