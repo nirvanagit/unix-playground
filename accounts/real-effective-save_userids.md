@@ -44,6 +44,62 @@ RUID to the owner of this special binary executable file, which in this case is 
 
 The kernel makes the decision whether this process has the privilege by looking at the EUID of the process.
 
+Setting SGID, is same as setting SUID for files, but differs for directories.
+
+In the following exercise, we have two users, foo and bar who belong to the group 'play'. foo and bar want to collaborate on a folder called /project.
+
+Once the admin configures this folder and assigns the groupid of the folder to play, when foo creates a file /project/foo-file the ownership is foo(user) and foo(group), similar behavior when
+bar creates a file.
+
+What we want to do is, whenever either of them creates a file, the group ownership is set to 'play'.
+
+```
+[root@cd5b15a4228e /]# whoami
+root
+[root@cd5b15a4228e /]# mkdir project
+[root@cd5b15a4228e /]# ls -ld project
+drwxr-xr-x 2 root root 4096 Dec 20 02:54 project
+[root@cd5b15a4228e /]# chgrp -R play project
+[root@cd5b15a4228e /]# ls -ld project
+drwxr-xr-x 2 root play 4096 Dec 20 02:54 project
+[root@cd5b15a4228e /]# chmod g+rwx project
+[root@cd5b15a4228e /]# ls -ld project
+drwxrwxr-x 2 root play 4096 Dec 20 02:54 project
+[root@cd5b15a4228e /]# exit
+exit
+sh-4.4# su foo
+[foo@cd5b15a4228e /]$ touch project/foo-file
+[foo@cd5b15a4228e /]$ exit
+exit
+sh-4.4# su bar
+[bar@cd5b15a4228e /]$ touch project/bar-file
+[bar@cd5b15a4228e /]$ ls -la project
+total 8
+drwxrwxr-x 2 root play 4096 Dec 20 02:55 .
+drwxr-xr-x 1 root root 4096 Dec 20 02:54 ..
+-rw-rw-r-- 1 bar  bar     0 Dec 20 02:55 bar-file
+-rw-rw-r-- 1 foo  foo     0 Dec 20 02:55 foo-file
+[bar@cd5b15a4228e /]$
+[bar@cd5b15a4228e /]$ exit
+exit
+sh-4.4# su root
+[root@cd5b15a4228e /]#
+[root@cd5b15a4228e /]#
+[root@cd5b15a4228e /]# chmod g+s project
+[root@cd5b15a4228e /]# exit
+exit
+sh-4.4# su foo
+[foo@cd5b15a4228e /]$ touch project/foo-file-2
+[foo@cd5b15a4228e /]$ ls -la project
+total 8
+drwxrwsr-x 2 root play 4096 Dec 20 02:56 .
+drwxr-xr-x 1 root root 4096 Dec 20 02:54 ..
+-rw-rw-r-- 1 bar  bar     0 Dec 20 02:55 bar-file
+-rw-rw-r-- 1 foo  foo     0 Dec 20 02:55 foo-file
+-rw-rw-r-- 1 foo  play    0 Dec 20 02:56 foo-file-2
+[foo@cd5b15a4228e /]$
+```
+
 ### Sticky bit
 
 This bit should have always been called the "restricted deletion bit" given that's what it really connotes.
