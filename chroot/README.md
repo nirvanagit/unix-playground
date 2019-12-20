@@ -16,6 +16,9 @@ cp /bin/pwd jail/bin/
 ### copy required libraries
 sudo cp -r /usr/lib/* jail/usr/lib/
 
+### might also require this
+cp -r /lib64 jail/
+
 ## step 4
 ### enter chroot
 sudo chroot jail /bin/sh
