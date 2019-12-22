@@ -776,3 +776,6 @@ Warning: debugging optimized function
    151:         MOVL    AX, DI  // arg 1 pid
 (dlv)
 ```
+
+### References
+- [golang coredumpdebugging](https://github.com/golang/go/wiki/CoreDumpDebugging)
