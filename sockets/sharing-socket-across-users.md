@@ -15,6 +15,11 @@ Docker run
 docker run -it centos:latest sh
 ```
 
+Set umask to 0
+
+```
+umask 0
+```
 Create two users
 
 ```
