@@ -76,8 +76,7 @@ Tasks:   3 total,   1 running,   2 sleeping,   0 stopped,   1 zombie
 What happened here?
 1. From within the shell script we ran `sleep 1 &` in background.
 2. Now normally this process would be inherited by the process created when we invoked `sh create_zombie.sh`, but what instead happened here
-was, we ran `exec sleep 10`. Running sleep with __exec__ took over the PID of `sh create_zombie.sh`, and the original PID lost track of its child, which
-was `sleep 1 &` and hence creating a zombie, as now `sleep 1 &` parent has no knowledge of itself.
+was, we ran `exec sleep 10`. Running sleep with __exec__ took over the PID of `sh create_zombie.sh`, and it won't know when sleep exited.
 
 Just to show what exec did, I've remove __exec__ from `create_zombie.sh`.
 ```
@@ -101,6 +100,49 @@ Note: running sleep with __exec__ is not making `sleep 1 &` an orphan, because i
 ([orphaned](https://en.wikipedia.org/wiki/Orphan_process) process is a process whose parent process has terminated, and the child continues to run. An orphaned process is adopted by init (PID 1))
 
 ### Orphaned processes
+
+Whenever a parent process exits before its child, the child process becomes orphaned, and becomes the child of init (PID 1).
+
+Script `create_orphan.sh` to create an orphan process
+```
+#!/bin/sh
+
+sleep 20 &
+sleep 10
+exit
+```
+
+Run the script
+```
+# sh create_orphan.sh
+```
+
+From another shell run
+```
+# ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   4452  1584 pts/0    Ss   00:26   0:00 sh
+root        50  0.0  0.0   4452  1504 pts/1    Ss   00:41   0:00 sh
+root       157  0.0  0.0   4452   752 pts/0    S+   01:50   0:00 sh create_orphan.sh
+root       158  0.0  0.0   4352   652 pts/0    S+   01:50   0:00 sleep 20
+root       159  0.0  0.0   4352   740 pts/0    S+   01:50   0:00 sleep 10
+root       160  0.0  0.0  15576  2116 pts/1    R+   01:50   0:00 ps aux
+# ps -p 158 -o ppid
+ PPID
+  157
+# ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   4452  1584 pts/0    Ss+  00:26   0:00 sh
+root        50  0.0  0.0   4452  1504 pts/1    Ss   00:41   0:00 sh
+root       158  0.0  0.0   4352   652 pts/0    S    01:50   0:00 sleep 20
+root       162  0.0  0.0  15576  2072 pts/1    R+   01:50   0:00 ps aux
+# ps -p 158 -o ppid
+ PPID
+    1
+#
+```
+
+In the second call to `ps -p 158 -o ppid` we observe that child is adopted by init (PID 1).
 
 ### References
 - [stackoverflow - create zombie in bash](https://unix.stackexchange.com/questions/217507/zombies-in-bash)
