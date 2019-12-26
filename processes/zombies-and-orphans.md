@@ -79,7 +79,7 @@ What happened here?
 was, we ran `exec sleep 10`. Running sleep with __exec__ took over the PID of `sh create_zombie.sh`, and the original PID lost track of its child, which
 was `sleep 1 &` and hence creating a zombie, as now `sleep 1 &` parent has no knowledge of itself.
 
-Just to show what exec did, I've remove exec from the script and run it again and check ps aux
+Just to show what exec did, I've remove __exec__ from `create_zombie.sh`.
 ```
 # sh create_zombie.sh
 #
@@ -99,6 +99,8 @@ This time we see that `sh create_zombie.sh` and `sleep 10` have different PIDs.
 
 Note: running sleep with __exec__ is not making `sleep 1 &` an orphan, because it was originally called from within the script, and the script continues to run.
 ([orphaned](https://en.wikipedia.org/wiki/Orphan_process) process is a process whose parent process has terminated, and the child continues to run. An orphaned process is adopted by init (PID 1))
+
+### Orphaned processes
 
 ### References
 - [stackoverflow - create zombie in bash](https://unix.stackexchange.com/questions/217507/zombies-in-bash)
