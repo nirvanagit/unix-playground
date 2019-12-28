@@ -94,6 +94,18 @@ mount4 on /home/point4 type mqueue (rw,relatime)
 #
 ```
 
+### mount sysfs filesystem
+```
+# mkdir point6
+# mount -t sysfs mount6 point6
+# mount | grep point6
+mount6 on /home/point6 type sysfs (rw,relatime)
+#
+# ls point6
+block  bus  class  dev  devices  firmware  fs  hypervisor  kernel  module  power
+#
+```
+
 ### mount ext3/ext4 filesystem
 
 This is a special type and a simple mount command would not work here. To create a ext3 filesystem, we need a device,
