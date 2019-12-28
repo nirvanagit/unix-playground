@@ -148,3 +148,9 @@ Writing superblocks and filesystem accounting information: done
 lost+found
 #
 ```
+
+## References
+
+- [virtual-hard-drive](https://superuser.com/questions/686064/how-to-attach-a-virtual-hard-drive-to-occupy-dev-sdb)
+- [using mkfs](https://www.thegeekdiary.com/how-to-create-and-mount-filesystems-in-linux/)
+- [loop device](http://man7.org/linux/man-pages/man4/loop.4.html)
