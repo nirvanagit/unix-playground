@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-const SockAddr = "/Users/aaeron/workspace/learning/unix-playground/echo.sock"
+const SockAddr = "/tmp/echo.sock"
 
 func echoServer(c net.Conn) {
 	log.Printf("Client connected [%s]", c.RemoteAddr().Network())
