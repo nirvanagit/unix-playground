@@ -46,3 +46,6 @@ packet string: PACKET: 88 bytes, wire length 88 cap length 88 @ 2019-12-28 15:13
 - Layer 2 (40 bytes) = IPv6     {Contents=[..40..] Payload=[..44..] Version=6 TrafficClass=0 FlowLabel=1014116 Length=44 NextHeader=TCP HopLimit=64 SrcIP=::1 DstIP=::1 HopByHop=nil}
 - Layer 3 (44 bytes) = TCP      {Contents=[..44..] Payload=[] SrcPort=52367 DstPort=80(http) Seq=2726361653 Ack=0 DataOffset=11 FIN=false SYN=true RST=false PSH=false ACK=false URG=false ECE=false CWR=false NS=false Window=65535 Checksum=52 Urgent=0 Options=[..8..] Padding=[0]}
 ```
+
+## References
+- [gopacket](https://godoc.org/github.com/google/gopacket/pcap)
