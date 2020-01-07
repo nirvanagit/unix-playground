@@ -167,5 +167,5 @@ fact that we were able to run a server listening the same port `8080` in each na
 assigned to them.
 
 ## References
-- Awesome blog on creating network namespaces (all of the work shown above, except running it in docker, and running netcat client/servers) - [ops.tips](https://ops.tips/blog/using-network-namespaces-and-bridge-to-isolate-servers/)
+- Awesome blog on creating network namespaces (all of the work shown above, except running it in docker, and running netcat client/servers) - [ops.tips](https://ops.tips/blog/using-network-namespaces-and-bridge-to-isolate-servers/). Author of the opts.tips blog is - [Ciro S. Costa](https://twitter.com/cirowrc)
 - [network namespaces](https://ops.tips/blog/using-network-namespaces-and-bridge-to-isolate-servers/)
